@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: aqua;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            margin-left: 20px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Online Quiz</h1>
+        <div id="quiz">
+            <!-- Questions will be populated here -->
+        </div>
+        <button id="submit">Submit</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the capital of France?",
+                options: ["Paris", "London", "Berlin", "Madrid"],
+                answer: "Paris"
+            },
+            {
+                question: "What is the largest mammal?",
+                options: ["Elephant", "Blue whale", "Giraffe", "Lion"],
+                answer: "Blue whale"
+            },
+            {
+                question: "Who painted the Mona Lisa?",
+                options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
+                answer: "Leonardo da Vinci"
+            },
+            {
+                question: "What is the powerhouse of the cell?",
+                options: ["Mitochondria", "Nucleus", "Ribosome", "Endoplasmic reticulum"],
+                answer: "Mitochondria"
+            },
+            {
+                question: "What is the chemical symbol for water?",
+                options: ["O", "H2", "CO2", "H2O"],
+                answer: "H2O"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz');
+        const resultContainer = document.getElementById('result');
+        const submitButton = document.getElementById('submit');
+
+        function displayQuestions() {
+            let output = '';
+            questions.forEach((question, index) => {
+                output += `<div class="question">${index + 1}. ${question.question}</div>`;
+                output += `<div class="options">`;
+                question.options.forEach(option => {
+                    output += `<label><input type="radio" name="question${index}" value="${option}"> ${option}</label><br>`;
+                });
+                output += `</div>`;
+            });
+            quizContainer.innerHTML = output;
+        }
+
+        function showResult() {
+            let score = 0;
+            questions.forEach((question, index) => {
+                const userAnswer = document.querySelector(`input[name="question${index}"]:checked`);
+                if (userAnswer) {
+                    if (userAnswer.value === question.answer) {
+                        score++;
+                    }
+                }
+            });
+            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}`;
+        }
+
+        // Display questions when the page loads
+        displayQuestions();
+
+        // Show result on submit button click
+        submitButton.addEventListener('click', showResult);
+    </script>
+</body>
+</html>
